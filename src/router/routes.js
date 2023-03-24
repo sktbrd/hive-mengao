@@ -9,7 +9,8 @@ const routes = [
       { path: 'posts', component: () => import('pages/PostsList.vue') },
       { path: 'login', component: () => import('pages/LoginPage.vue') },
       { path: 'wallet', component: () => import('pages/UserWallet.vue') },
-      { path: 'login2', component: () => import('pages/LoginPage2.vue') }
+      { path: 'login2', component: () => import('pages/LoginPage2.vue') },
+      { path: 'post', component: () => import('pages/PostPage.vue') }
     ]
   }
 

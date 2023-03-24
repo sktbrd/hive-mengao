@@ -51,44 +51,39 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Login',
+    caption: 'with Hive KeyChain',
+    icon: 'login',
+    link: '/login'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Login',
+    caption: 'with Ethereum Wallet',
+    icon: 'login',
+    link: '/login'
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'Post',
+    caption: 'something gnarly',
+    icon: 'create',
+    link: '/post'
+  },
+
+  {
+    title: 'Wallet',
+    caption: 'Hive Wallet',
+    icon: 'wallet',
+    link: '/wallet'
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
+    title: 'Discord',
+    caption: 'SkateHive',
+    icon: 'discord',
+    link: 'https://discord.gg/skatehive'
   },
   {
     title: 'AppAdmin',
-    caption: 'AppAdmin',
+    caption: '',
     icon: 'settings_applications',
     link: '/#/admin'
   }
