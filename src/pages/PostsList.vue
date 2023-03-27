@@ -51,11 +51,13 @@ export default {
       const dhiveClient = new dhive.Client(['https://api.hive.blog', 'https://api.hivekings.com', 'https://anyx.io', 'https://api.openhive.network'])
       const query = {
         tag: 'skatehive',
-        limit: 100
+        limit: 100,
+        description: true
       }
       const posts = await dhiveClient.database.getDiscussions('created', query)
       this.rows = posts
       console.log(posts)
+      console.log(query)
     }
   }
 }
