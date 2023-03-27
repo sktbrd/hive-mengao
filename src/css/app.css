@@ -3,3 +3,22 @@
 .q-table {
   background-color: yellow ;
 }
+
+.post-body {
+  background-color:floralwhite;
+  width: 90%;
+  height:50%;
+  overflow-y: hidden;
+}
+
+.title-render {
+  background-color: aquamarine;
+}
+
+.body-render {
+  background-color: brown ;
+}
+
+.q-toolbar {
+  background-color: black;
+}

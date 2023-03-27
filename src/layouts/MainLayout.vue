@@ -12,10 +12,13 @@
         />
 
         <q-toolbar-title>
-          HIVE
+          <q-btn>
+            <q-avatar size="sm" square>
+              <img src="https://images.ecency.com/u/hive-173115/avatar/lardge" alt="Skatehive logo" />
+            </q-avatar>
+            SKATEHIVE
+          </q-btn>
         </q-toolbar-title>
-
-        <div>v0.1</div>
       </q-toolbar>
     </q-header>
 
@@ -28,7 +31,7 @@
         <q-item-label
           header
         >
-          Essential Links
+          Menu
         </q-item-label>
 
         <EssentialLink
@@ -50,6 +53,12 @@ import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
+  {
+    title: 'Home',
+    caption: '',
+    icon: 'home',
+    link: '/'
+  },
   {
     title: 'Login',
     caption: 'with Hive KeyChain',

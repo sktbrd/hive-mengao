@@ -20,7 +20,7 @@ export default {
   methods: {
     async login () {
       if (!window.hive_keychain) {
-        alert('Please install Hive Keychain first')
+        alert('You have to install Hive KeyChain in the Webstore or in AppStore')
         return
       }
 

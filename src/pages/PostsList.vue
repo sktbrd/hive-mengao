@@ -55,6 +55,7 @@ export default {
       }
       const posts = await dhiveClient.database.getDiscussions('created', query)
       this.rows = posts
+      console.log(posts)
     }
   }
 }
