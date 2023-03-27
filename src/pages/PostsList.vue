@@ -51,8 +51,7 @@ export default {
       const dhiveClient = new dhive.Client(['https://api.hive.blog', 'https://api.hivekings.com', 'https://anyx.io', 'https://api.openhive.network'])
       const query = {
         tag: 'skatehive',
-        limit: 100,
-        description: true
+        limit: 100
       }
       const posts = await dhiveClient.database.getDiscussions('created', query)
       this.rows = posts
@@ -61,4 +60,5 @@ export default {
     }
   }
 }
+
 </script>
