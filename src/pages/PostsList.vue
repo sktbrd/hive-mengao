@@ -1,5 +1,8 @@
 <template>
   <q-page padding>
+    <div v-if="user">
+      <h3> Hello {{ user.name }}, welcome to the revolution</h3>
+    </div>
     <div class="row">
       <q-table
         dense
@@ -11,6 +14,11 @@
         separator="cell"
       >
       </q-table>
+    </div>
+    <div class="container">
+      <q-page-container
+      title= "Posts"
+      ></q-page-container>
     </div>
   </q-page>
 </template>
@@ -38,7 +46,8 @@ export default {
           sortable: true
         }
       ],
-      rows: []
+      rows: [],
+      search: ''
 
     }
   },
@@ -57,6 +66,11 @@ export default {
       this.rows = posts
       console.log(posts)
       console.log(query)
+      // const json = JSON.parse(posts.json_metadata)
+      // console.log(json)
+    },
+    searchItems () {
+      console.log('instalar busca')
     }
   }
 }

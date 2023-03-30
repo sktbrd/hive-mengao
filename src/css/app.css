@@ -1,5 +1,4 @@
 /* app global css */
-
 .q-table {
   background-color: yellow ;
 }
@@ -21,4 +20,18 @@
 
 .q-toolbar {
   background-color: black;
+  border-radius: 4px;
 }
+
+.search-bar{
+  border-radius: 20px;
+  border-color: black;
+  padding-left: 10%;
+}
+
+.btn-nav {
+  background-color: darkgray;
+
+}
+
+

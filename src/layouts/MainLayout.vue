@@ -12,11 +12,11 @@
         />
 
         <q-toolbar-title>
-          <q-btn>
+          <q-btn class="btn-nav">
             <q-avatar size="sm" square>
               <img src="https://images.ecency.com/u/hive-173115/avatar/lardge" alt="Skatehive logo" />
             </q-avatar>
-            SKATEHIVE
+             SKATEHIVE
           </q-btn>
         </q-toolbar-title>
       </q-toolbar>
@@ -28,11 +28,14 @@
       bordered
     >
       <q-list>
-        <q-item-label
-          header
-        >
-          Menu
-        </q-item-label>
+
+        <q-input
+        class="search-bar"
+        type="search"
+        v-model="search"
+        placeholder="... Search Skate Stuff"
+        @input="searchItems"
+        />
 
         <EssentialLink
           v-for="link in essentialLinks"

@@ -1,13 +1,15 @@
 {
   "name": "Skatehive V2",
   "version": "0.0.2",
-  "description": "testando",
-  "productName": "teste",
+  "description": "Skatehive V2",
+  "productName": "Skatehive V2",
   "author": "bgr",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
+    "build: "quasar build"  
+    "deploy" "vercel"
   },
   "dependencies": {
     "@hiveio/dhive": "^1.2.5",
