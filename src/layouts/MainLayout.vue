@@ -72,7 +72,7 @@ const linksList = [
     title: 'Login',
     caption: 'with Ethereum Wallet',
     icon: 'login',
-    link: '/login'
+    link: '/eth'
   },
   {
     title: 'Post',
