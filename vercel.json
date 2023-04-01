@@ -9,8 +9,7 @@
       }
     }
   ],
-  "routes": [
-    {"handle: "filesystem"}	
+  "routes": [	
     {"src": "/(.*)","dest": "/index.html"}  
   ]
 }
