@@ -8,7 +8,10 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
-    "deploy": "vercel"
+    "build": "quasar build",
+    "deploy": "vercel",
+    "vercel-build": "quasar build"
+
   },
   "dependencies": {
     "@hiveio/dhive": "^1.2.5",
