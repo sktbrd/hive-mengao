@@ -1,11 +1,13 @@
 {
-  "version": 2,
   "builds": [
     {
-      "src": "quasar.config.js",
-      "use": "@vercel/static-build",
+      "src": "package.json",
+      "use": "@vercel/node",
       "config": {
-        "distDir": "dist/spa"
+        "build": {
+          "command": "quasar build",
+          "output": "dist/spa"
+        }
       }
     }
   ],
