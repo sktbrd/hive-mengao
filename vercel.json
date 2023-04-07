@@ -6,11 +6,19 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist/spa"
+      },
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "output": {
+        "clean": true
       }
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
-    {"src": "/(.*)","dest": "/index.html"}
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
