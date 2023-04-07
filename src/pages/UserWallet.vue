@@ -1,8 +1,11 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page>
     <div v-if="user">
       <p>Hello {{ user.name }}</p><br>
-      <p>you have {{ user.balance }} Hive in your wallet</p>
+      <p>You have {{ user.balance }} and {{ user.hbd_balance }} in your Hive wallet</p>
+    </div>
+    <div v-if="connectedWallet">
+      <p>ETH balance: {{ ethbalance }}</p>
     </div>
   </q-page>
 </template>
@@ -17,8 +20,13 @@ export default defineComponent({
   setup () {
     const $q = useQuasar()
     const user = $q.sessionStorage.getItem('user')
+    const connectedWallet = localStorage.getItem('connectedWallet')
+    const ethbalance = localStorage.getItem('ethbalance')
+    console.log(user.hbd_balance)
     return {
-      user
+      user,
+      connectedWallet,
+      ethbalance
     }
   }
 })

@@ -32,9 +32,7 @@
         <q-input
         class="search-bar"
         type="search"
-        v-model="search"
         placeholder="... Search Skate Stuff"
-        @input="searchItems"
         />
 
         <EssentialLink
@@ -83,7 +81,7 @@ const linksList = [
 
   {
     title: 'Wallet',
-    caption: 'Hive Wallet',
+    caption: '',
     icon: 'wallet',
     link: '/wallet'
   },

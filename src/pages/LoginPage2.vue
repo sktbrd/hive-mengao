@@ -3,7 +3,7 @@
     <label for="username">Username:</label>
     <input type="text" id="username" v-model="username">
     <button @click="login">Log in with Hive Keychain</button>
-    <div v-if="isLoggedIn">Logged in as {{ username }}</div>
+    <div v-if="isLoggedIn">Logged in as {{ username }} with balance of {{balance}}</div>
   </div>
 </template>
 
@@ -14,7 +14,8 @@ export default {
   data () {
     return {
       username: '',
-      isLoggedIn: false
+      isLoggedIn: false,
+      balance: null
     }
   },
   methods: {
@@ -43,8 +44,22 @@ export default {
                 const key = dhive.PublicKey.fromString(publicKey)
                 if (key.verify(dhive.cryptoUtils.sha256(memo), sig) === true) {
                   this.isLoggedIn = true
+                  const account = {
+                    username: this.username,
+                    session: this.isLoggedIn
+                  }
+
+                  localStorage.setItem('user', JSON.stringify(account))
+                  console.log('Stored user data:', account)
+
+                  dhiveClient.database.getAccounts([this.username]).then((result) => {
+                    this.balance = result[0].balance
+                    console.log('Balance:', this.balance)
+                  }).catch((error) => {
+                    console.log('Error getting balance:', error)
+                  })
                 } else {
-                  console.log('error')
+                  console.log('Invalid signature')
                 }
               } else {
                 console.log('Public Key and Username dont match')
@@ -55,6 +70,13 @@ export default {
       } catch (error) {
         console.log('Error:', error)
       }
+    }
+  },
+  created () {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (user && user.session) {
+      this.username = user.username
+      this.isLoggedIn = user.session
     }
   }
 }

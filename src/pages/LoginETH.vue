@@ -4,8 +4,9 @@
       <h1>Connect Wallet</h1>
       <div class="button-container">
         <button @click="connectWallet">Connect Wallet</button>
-        <div v-if="connected" class="greeting">
-          Hello user {{ connectedWallet }}
+        <div v-if="connectedWallet" class="greeting">
+          <p>Hello user {{ connectedWallet }}. </p>
+          <p>Your ETH balance is {{ ethbalance }}. </p>
         </div>
       </div>
     </div>
@@ -19,8 +20,8 @@ export default {
   name: 'LoginETH',
   data () {
     return {
-      connected: false,
-      connectedWallet: null
+      connectedWallet: localStorage.getItem('connectedWallet'),
+      ethbalance: localStorage.getItem('ethbalance')
     }
   },
   methods: {
@@ -30,9 +31,28 @@ export default {
           await window.ethereum.request({ method: 'eth_requestAccounts' })
           const web3 = new Web3(window.ethereum)
           const accounts = await web3.eth.getAccounts()
-          this.connected = true
-          this.connectedWallet = accounts[0]
-          console.log('Connected to wallet with address:', accounts[0])
+          const connectedWallet = accounts[0]
+          console.log('Connected to wallet with address:', connectedWallet)
+
+          // Store the connected wallet address in local storage
+          localStorage.setItem('connectedWallet', connectedWallet)
+
+          // Get the ETH balance of the connected wallet
+          const ethbalance = await web3.eth.getBalance(connectedWallet)
+          const ethbalanceFormatted = web3.utils.fromWei(ethbalance, 'ether')
+          localStorage.setItem('ethbalance', ethbalanceFormatted)
+          // Log the ETH balance to the console
+          console.log('ETH balance:', ethbalanceFormatted)
+
+          // Emit an event to update the title and caption of the link list
+          this.$emit('update-title-and-caption', {
+            title: 'My Wallet',
+            caption: connectedWallet
+          })
+
+          // Update the data properties
+          this.connectedWallet = connectedWallet
+          this.ethbalance = ethbalanceFormatted
         } catch (error) {
           console.error(error)
         }
@@ -43,34 +63,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.content {
-  text-align: center;
-}
-
-.button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.greeting {
-  margin-top: 20px;
-}
-</style>

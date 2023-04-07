@@ -1,51 +1,94 @@
 <template>
-  <q-page class="flex flex-center">
-    <form id="app-form">
-    <h4>Title: </h4>
-    <input
-      placeholder="Title of your post"
-      v-model="title"
-      @input="event => text = event.target.value">
-    <a></a>
-    <h4> POST:</h4>
-    <input class="post-body"
-      placeholder="some cool markdown content here"
-      v-model="body"
-      @input="event => text = event.target.value"
-      v-on:click="submitForm">
-    <q-btn class="q-btn" v-on:click="submitForm">Submit</q-btn>
-    </form>
-
-    <div class="title-render" v-if="title">
-      <h2> {{ title }}</h2>
+  <q-page class="q-pa-md">
+    <div class="row no-gutters justify-center">
+      <div class="col-lg-6 col-md-8 col-sm-10">
+        <q-card class="q-pa-md">
+          <q-card-section>
+            <q-form @submit="submitForm">
+              <q-input
+                filled
+                v-model="title"
+                label="Title"
+                class="q-my-md"
+              />
+              <q-input
+                filled
+                v-model="body"
+                label="Post Body (Markdown)"
+                type="textarea"
+                class="q-my-md"
+              />
+              <q-input
+                filled
+                v-model="thumbnail"
+                label="Thumbnail URL"
+                class="q-my-md"
+              />
+              <q-input
+                filled
+                v-model="hashtags"
+                label="Hashtags (separated by commas)"
+                class="q-my-md"
+              />
+              <q-btn type="submit" class="q-mt-md" label="Submit" />
+            </q-form>
+          </q-card-section>
+        </q-card>
+      </div>
+      <div class="col-lg-6 col-md-8 col-sm-10">
+        <q-card class="q-pa-md" v-if="title || body">
+          <q-card-section>
+            <div v-if="title" class="text-h2">{{ title }}</div>
+            <div
+              v-if="body"
+              class="text-body2 q-mt-sm"
+              v-html="marked(body)"
+              style="word-wrap: break-word;"
+            />
+            <div class="row no-gutters q-mt-md">
+              <div
+                v-for="tag in hashtagArray"
+                :key="tag"
+                class="q-pa-xs bg-grey-1 text-grey-8 rounded-borders"
+                style="margin-right: 8px;"
+              >
+                #{{ tag }}
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
     </div>
-    <div class="body-render" v-if="body">
-      <p> {{ body }}</p>
-    </div>
-
   </q-page>
 </template>
 
 <script>
+import { marked } from 'marked'
 
 export default {
   data () {
     return {
       title: '',
       body: '',
-      hashtags: [],
+      hashtags: '',
       thumbnail: ''
     }
   },
-
   methods: {
-    submitForm (e) {
-      e.preventDefault()
-
-      console.log(this.body)
-      console.log(this.title)
+    submitForm () {
+      // submit form
+    }
+  },
+  computed: {
+    marked () {
+      return marked
+    },
+    hashtagArray () {
+      return this.hashtags
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag !== '')
     }
   }
 }
-
 </script>
