@@ -6,9 +6,6 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist/spa"
-      },
-      "output": {
-        "clean": true
       }
     }
   ],
