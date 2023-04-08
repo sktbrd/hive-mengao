@@ -1,8 +1,13 @@
 <template>
+  <head>
+  <link rel="stylesheet" href="src/css/app.css">
+</head>
+
   <q-page padding>
     <div v-if="user">
       <h3> Hello {{ username }}, welcome to the revolution</h3>
     </div>
+    <PostModal ref="postModal" :post="selectedPost" :modelValue="showPostModal" />
     <div class="q-gutter-md q-matrix">
       <div v-for="(post, index) in posts" :key="index" class="q-col-xs-12 q-col-md-4 q-mb-md">
         <q-card @click="showPost(post)" class="cursor-pointer">
@@ -60,21 +65,9 @@ export default {
     showPost (post) {
       this.selectedPost = post
       this.showPostModal = true
+      console.log(post.author)
+      console.log(post.url)
     }
   }
 }
 </script>
-
-<style scoped>
-.q-matrix {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 16px;
-}
-
-@media only screen and (min-width: 768px) {
-  .q-matrix {
-    grid-template-columns: repeat(3, minmax(300px, 1fr));
-  }
-}
-</style>

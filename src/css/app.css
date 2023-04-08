@@ -34,4 +34,37 @@
 
 }
 
+/* Layout */
+.q-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+  .q-matrix {
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+  }
+}
+
+/* Post cards */
+.q-card {
+  cursor: pointer;
+}
+
+.q-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.q-card-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.q-item-label[header] {
+  font-weight: bold;
+}
 
