@@ -91,6 +91,10 @@ export default {
   methods: {
     submitForm () {
       // submit form
+    },
+    handleFileInput (event) {
+      const filePath = event.target.value
+      console.log('Selected file:', filePath)
     }
   },
   computed: {
