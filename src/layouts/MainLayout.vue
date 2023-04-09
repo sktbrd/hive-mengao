@@ -50,8 +50,9 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import { useQuasar } from 'quasar'
 
 const linksList = [
   {
@@ -107,11 +108,32 @@ export default defineComponent({
   },
 
   setup () {
+    const $q = useQuasar()
+    const hiveuser = $q.sessionStorage.getItem('user')
+    console.log(hiveuser)
     const leftDrawerOpen = ref(false)
 
+    const modifiedLinksList = computed(() => {
+      if (hiveuser) {
+        const modifiedLink = { ...linksList[1] }
+        modifiedLink.title = hiveuser.name
+        console.log(hiveuser.name)
+        modifiedLink.caption = 'disconnect'
+        modifiedLink.icon = 'key'
+        return [
+          ...linksList.slice(0, 1),
+          modifiedLink,
+          ...linksList.slice(2)
+        ]
+      } else {
+        return linksList
+      }
+    })
+
     return {
-      essentialLinks: linksList,
+      essentialLinks: modifiedLinksList.value,
       leftDrawerOpen,
+      hiveuser,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }

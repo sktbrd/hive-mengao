@@ -31,6 +31,20 @@
                 class="q-my-md"
               />
               <q-btn type="submit" class="q-mt-md" label="Submit" />
+              <input
+              ref="fileInput"
+              type="file"
+              style="display: none;"
+              @change="handleFileInput"
+            />
+            <q-btn
+              color="amber"
+              glossy
+              type="button"
+              class="q-mt-md"
+              label="Upload Video"
+              @click="$refs.fileInput.click()"
+            />
             </q-form>
           </q-card-section>
         </q-card>

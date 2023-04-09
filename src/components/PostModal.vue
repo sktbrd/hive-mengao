@@ -40,7 +40,7 @@ export default {
     // Object prop containing the post data to display
     post: {
       type: Object,
-      required: true
+      required: false
     }
   },
   data () {

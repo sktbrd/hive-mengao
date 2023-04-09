@@ -53,6 +53,7 @@ export default function useAuthUser () {
 
   const logout = async () => {
     sessionStorage.set('user', null)
+    console.log('logout')
   }
 
   const isLoggedIn = () => {
