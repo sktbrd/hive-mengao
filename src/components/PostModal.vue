@@ -1,15 +1,19 @@
 <template>
   <!-- Q-dialog component to display the post modal -->
-  <q-dialog v-model="showPost" position="top">
+  <q-dialog v-model="showPost" position="top" @before-hide="handleClose">
     <!-- Q-card component to display the content of the modal -->
     <q-card class="q-pa-md" style="max-width: 800px;">
       <!-- Q-card-section component to contain the post content -->
       <q-card-section>
         <!-- Q-item-label component to display the post author -->
+        <q-avatar class="avatar-overlay">
+              <img :src="getAuthorAvatar(post.author)" class="avatar-img" />
+        </q-avatar>
         <q-item-label>
           {{ post.author }}
         </q-item-label>
-        <!-- div element to display the post body -->
+        <hr>
+                <!-- div element to display the post body -->
         <div
               v-if="post.body"
               class="text-body2 q-mt-sm"
@@ -70,9 +74,27 @@ export default {
   },
   methods: {
     handleClose () {
-      console.log('Close button clicked')
+      console.log('Closed Modal')
+      this.$emit('update:modelValue', false)
+    },
+    getAuthorAvatar (author) {
+      return 'https://images.ecency.com/webp/u/' + author + '/avatar/small'
     }
   }
 }
 
 </script>
+
+<style scoped>
+.avatar-overlay {
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 5px 2px rgba(4, 3, 2, 0.5); /* Add a golden glow */
+}
+
+.q-card {
+  position: relative;
+  z-index: 0;
+  padding-top: 20px;
+}
+</style>

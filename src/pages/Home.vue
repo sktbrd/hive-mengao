@@ -1,10 +1,4 @@
 <template>
-  <!-- Load the custom CSS stylesheet for the component -->
-  <head>
-    <link rel="stylesheet" href="src/css/app.css">
-  </head>
-
-  <!-- Q-page component with padding -->
     <PostFeed></PostFeed>
 </template>
 
