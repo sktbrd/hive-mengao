@@ -90,6 +90,7 @@ export default {
     likePost (post) {
       // Handle the like action here
       console.log('Liked post:', post)
+      console.log(post.author)
     }
   }
 }

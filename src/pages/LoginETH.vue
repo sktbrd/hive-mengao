@@ -1,19 +1,24 @@
 <template>
-  <div class="container">
-    <div class="content">
-      <h1>Connect Wallet</h1>
-      <div class="button-container">
-        <button @click="connectWallet">Connect Wallet</button>
-        <div v-if="connectedWallet" class="greeting">
-          <p>Hello user {{ connectedWallet }}. </p>
-          <p>Your ETH balance is {{ ethbalance }}. </p>
+  <div>
+      <div>
+        <center>
+            <h2>Connect with ETH</h2>
+            <button @click="connectWallet">Connect Wallet</button>
+        </center>
+          <div v-if="connectedWallet" class="greeting">
+          <hr>
+          <p>Hello user <b>{{ connectedWallet }}</b> </p>
+          <p>Your ETH balance is <b>{{ ethbalance }}</b>. </p>
+        </div>
+        <div v-else class="greeting">
+            <q-btn @click="isConnectedHandle" >Disconnect Wallet</q-btn>
+        </div>
         </div>
       </div>
-    </div>
-  </div>
 </template>
 
 <script>
+
 import Web3 from 'web3'
 
 export default {
@@ -59,6 +64,9 @@ export default {
       } else {
         console.error('No web3 provider detected')
       }
+    },
+    isConnectedHandle () {
+      this.connectedWallet = !this.connectWallet
     }
   }
 }

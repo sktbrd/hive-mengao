@@ -1,8 +1,8 @@
 <template>
   <!-- Q-dialog component to display the post modal -->
-  <q-dialog v-model="showPost" position="top" @before-hide="handleClose">
+  <q-dialog v-model="showPost" position="top" bottom @before-hide="handleClose">
     <!-- Q-card component to display the content of the modal -->
-    <q-card class="q-pa-md" style="max-width: 800px;">
+    <q-card class="q-pa-md" style="max-width: 800px; padding-bottom: 80 ;">
       <!-- Q-card-section component to contain the post content -->
       <q-card-section>
         <!-- Q-item-label component to display the post author -->
@@ -22,7 +22,7 @@
             />
       </q-card-section>
       <!-- Q-card-actions component to contain the modal actions -->
-      <q-card-actions align="right">
+      <q-card-actions align="right" style="position: sticky; bottom: 0;">
         <!-- Q-btn component to close the modal -->
         <q-btn label="Close" color="primary" @click="handleClose" v-close-popup />
       </q-card-actions>
