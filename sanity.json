@@ -1,0 +1,11 @@
+{
+  "name": "@sanity/vision",
+  "version": "1.0.0",
+  "parts": [
+    {
+      "implements": "part:@sanity/tool",
+      "path": "lib/VisionTool.js"
+    }
+  ]
+}
+
