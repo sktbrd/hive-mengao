@@ -17,7 +17,7 @@
             </q-avatar>
             <q-item-label lines="1">{{ post.author }}</q-item-label>
             <q-item-label lines="5" header>{{ post.title }}</q-item-label>
-            <q-btn flat icon="done" @click.stop="likePost(post)" class="q-ml-sm right" label="Vote"/>
+            <q-btn flat icon="done" @click.stop="likePost(post, hiveuser)" class="q-ml-sm right" label="Vote"/>
           </q-card-section>
         </q-card>
       </div>
@@ -28,11 +28,17 @@
 <script>
 import PostModal from 'src/components/PostModal.vue'
 import getDhive from 'boot/dhive'
+import isLoggedIn from 'src/pages/LoginPage.vue'
+import hiveuser from 'src/layouts/MainLayout.vue'
+import { useQuasar } from 'quasar'
 
 export default {
   name: 'PostFeed',
   components: {
     PostModal
+  },
+  props: {
+    hiveuser: Object
   },
   data () {
     // Data properties to store the posts, search query, user, selected post, and post modal state
@@ -49,7 +55,7 @@ export default {
   computed: {
     // Computed property to return the username of the logged-in user
     username () {
-      return this.user ? this.user.name : ''
+      return isLoggedIn.value ? this.hiveuser.name : ''
     }
   },
   methods: {
@@ -64,7 +70,7 @@ export default {
       ])
       const query = {
         tag: 'skatehive',
-        limit: 30
+        limit: 69
       }
       const posts = await dhiveClient.database.getDiscussions('created', query)
       this.posts = posts.map((post) => {
@@ -83,30 +89,69 @@ export default {
     showPost (post) {
       this.selectedPost = post
       this.showPostModal = true
+      console.log(hiveuser.name)
       console.log(post.author)
       console.log(post.url)
       console.log(post)
     },
     likePost (post) {
-      // Handle the like action here
-      console.log('Liked post:', post)
-      console.log(post.author)
+      // Get dhive object and user from useAuthUser
+      const { dhive } = getDhive()
+      console.log(hiveuser.name)
+      const $q = useQuasar()
+
+      if (!hiveuser) {
+        alert('Please log in first')
+        return
+      }
+
+      const voter = $q.sessionStorage.getItem('user').name// The username of the account making the vote (the voter)
+      console.log(voter)
+      // Request the posting private key using Hive Keychain
+      if (!window.hive_keychain) {
+        alert('Please install Hive Keychain first')
+        return
+      }
+
+      window.hive_keychain.requestSignBuffer(voter, '', 'Posting', async (response) => {
+        if (response.error) {
+          console.error('Error:', response.message)
+          return
+        }
+
+        try {
+          // Create the private key object
+          const privateKey = dhive.PrivateKey.fromString(response.result)
+
+          // Post information
+          const author = post.author // The author of the post that the voter is voting on
+          const permlink = post.permlink // The unique identifier of the post
+
+          // Vote weight
+          const weight = 10000 // 100% upvote, adjust as needed
+
+          // Create the vote object
+          const vote = {
+            voter,
+            author,
+            permlink,
+            weight
+          }
+
+          // Broadcast the vote
+          const result = await dhive.broadcast.vote(vote, privateKey)
+          console.log('Vote success:', result)
+          console.log('Liked post:', post)
+          console.log(post.author)
+        } catch (error) {
+          console.error('Error:', error)
+        }
+      })
+    },
+    catch (error) {
+      console.error('Vote error:', error)
     }
   }
 }
+
 </script>
-
-<style scoped>
-.avatar-overlay {
-  position: relative;
-  margin-top: -50px; /* Adjust this value to achieve the desired overlap */
-  z-index: 1;
-  box-shadow: 0 0 10px 3px rgba(4, 3, 2, 0.5); /* Add a golden glow */
-}
-
-.q-card {
-  position: relative;
-  z-index: 0;
-  border-radius: 10%;
-}
-</style>

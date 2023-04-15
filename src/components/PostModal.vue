@@ -84,17 +84,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-.avatar-overlay {
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 0 5px 2px rgba(4, 3, 2, 0.5); /* Add a golden glow */
-}
-
-.q-card {
-  position: relative;
-  z-index: 0;
-  padding-top: 20px;
-}
-</style>

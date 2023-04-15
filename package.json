@@ -21,6 +21,7 @@
     "dhive-sl": "^2.0.0-prerelease.10",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
+    "keychain-sdk": "^0.2.1",
     "marked": "^4.2.12",
     "mavon-editor": "^2.10.4",
     "oh-vue-icons": "^1.0.0-rc3",

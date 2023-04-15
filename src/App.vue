@@ -9,7 +9,7 @@ import frames from 'src/assets/frames.js'
 export default defineComponent({
   name: 'App',
   mounted () {
-    this.animateConsole()
+    // this.animateConsole()
   },
   methods: {
     animateConsole () {
