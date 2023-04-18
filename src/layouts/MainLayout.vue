@@ -12,11 +12,11 @@
         />
 
         <q-toolbar-title>
-          <q-btn class="btn-nav">
+          <q-btn class="btn-nav" href="/">
             <q-avatar size="sm" square>
               <img src="https://images.ecency.com/u/hive-173115/avatar/lardge" alt="Skatehive logo" />
             </q-avatar>
-             SKATEHIVE
+            SKATEHIVE
           </q-btn>
         </q-toolbar-title>
       </q-toolbar>
@@ -53,52 +53,7 @@
 import { defineComponent, ref, computed } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { useQuasar } from 'quasar'
-
-const linksList = [
-  {
-    title: 'Home',
-    caption: '',
-    icon: 'home',
-    link: '/'
-  },
-  {
-    title: 'Login',
-    caption: 'with Hive KeyChain',
-    icon: 'login',
-    link: '/login'
-  },
-  {
-    title: 'Login',
-    caption: 'with Ethereum Wallet',
-    icon: 'login',
-    link: '/eth'
-  },
-  {
-    title: 'Post',
-    caption: 'something gnarly',
-    icon: 'create',
-    link: '/post'
-  },
-
-  {
-    title: 'Wallet',
-    caption: '',
-    icon: 'wallet',
-    link: '/wallet'
-  },
-  {
-    title: 'Discord',
-    caption: 'SkateHive',
-    icon: 'discord',
-    link: 'https://discord.gg/skatehive'
-  },
-  {
-    title: 'AppAdmin',
-    caption: '',
-    icon: 'settings_applications',
-    link: '/#/admin'
-  }
-]
+import linksList from 'src/components/subcomponents/linksList'
 
 export default defineComponent({
   name: 'MainLayout',

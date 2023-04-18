@@ -1,29 +1,37 @@
 <template>
   <!-- Q-page component with padding -->
-  <q-page>
+  <q-page padding>
     <!-- Component to display the post modal, with props passed from the parent component -->
     <PostModal ref="postModal" :post="selectedPost" v-model="showPostModal" @update:modelValue="showPostModal = $event" />
     <!-- Display the posts using the v-for directive to iterate through the posts array -->
-    <div>
-      <br>
-      </div>
-    <div class="q-gutter-md q-matrix">
-      <div v-for="(post, index) in posts" :key="index" class="q-col-xs-12 q-col-md-4 q-mb-md">
-        <!-- Q-card component with an on-click event to show the post modal, and displaying the post information -->
-        <q-card @click="showPost(post)" class="cursor-pointer">
-          <div style="height: 150px; overflow: hidden;">
-            <img :src="post.thumbnail" style="width: 100%; height: 100%; object-fit: cover;" />
-          </div>
-          <q-card-section>
-            <q-avatar class="avatar-overlay">
-              <img :src="getAuthorAvatar(post.author)" class="avatar-img" />
-            </q-avatar>
-            <q-item-label lines="1">{{ post.author }}</q-item-label>
-            <q-item-label lines="5" header>{{ post.title }}</q-item-label>
-            <q-btn flat icon="done" @click.stop="likePost(post, hiveuser)" class="q-ml-sm   " label="Vote"/>
-          </q-card-section>
+    <div class="q-gutter-md q-matrix grid-container">
+      <div class="daily-drop-card">
+        <q-card>
+          <!-- Add content for the daily drop card here -->
         </q-card>
-        <div v-if="showPost" class="post-feed"></div>
+      </div>
+      <div class="q-col-xs-12 q-col-md-6 q-mb-md big-card">
+        <q-card>
+          <!-- Add content for the bigger squared card here -->
+        </q-card>
+      </div>
+      <div class="q-col-xs-12 q-col-md-6 q-mb-md regular-cards">
+        <div v-for="(post, index) in posts" :key="index" class="q-col-xs-12 q-col-md-4 q-mb-md">
+          <!-- Q-card component with an on-click event to show the post modal, and displaying the post information -->
+          <q-card @click="showPost(post)" class="cursor-pointer">
+            <div style="height: 150px; overflow: hidden;">
+              <img :src="post.thumbnail" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <q-card-section>
+              <q-avatar class="avatar-overlay">
+                <img :src="getAuthorAvatar(post.author)" class="avatar-img" />
+              </q-avatar>
+              <q-item-label lines="1">{{ post.author }}</q-item-label>
+              <q-item-label lines="5" header>{{ post.title }}</q-item-label>
+              <q-btn flat icon="done" @click.stop="likePost(post, hiveuser)" class="q-ml-sm right" label="Vote"/>
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
     </div>
   </q-page>
@@ -37,7 +45,7 @@ import hiveuser from 'src/layouts/MainLayout.vue'
 import { useQuasar } from 'quasar'
 
 export default {
-  name: 'PostFeed',
+  name: 'PostFeed2',
   components: {
     PostModal
   },
@@ -159,3 +167,32 @@ export default {
 }
 
 </script>
+
+<style>
+/* Add new CSS for the daily drop card, big card, and regular cards */
+.grid-container {
+display: grid;
+grid-template-columns: 40% 1fr;
+grid-gap: 20px;
+}
+
+.daily-drop-card {
+grid-column: 1 / 2;
+grid-row: 1 / 4;
+}
+
+.big-card {
+grid-column: 2 / 3;
+grid-row: 1 / 2;
+height: 300px;
+}
+
+.regular-cards {
+grid-column: 3 / 4;
+grid-row: 1 / 4;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+grid-gap: 16px;
+}
+
+</style>

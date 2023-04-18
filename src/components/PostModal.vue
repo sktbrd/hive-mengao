@@ -2,9 +2,10 @@
   <!-- Q-dialog component to display the post modal -->
   <q-dialog v-model="showPost" position="top" bottom @before-hide="handleClose">
     <!-- Q-card component to display the content of the modal -->
-    <q-card class="q-pa-md" style="max-width: 800px; padding-bottom: 80 ;">
+    <q-card class="q-pa-md" style="max-width: 800px; height: 80%; border-radius: 20px; padding-bottom: 80 ;">
       <!-- Q-card-section component to contain the post content -->
       <q-card-section>
+        <br>
         <!-- Q-item-label component to display the post author -->
         <q-avatar class="avatar-overlay">
               <img :src="getAuthorAvatar(post.author)" class="avatar-img" />
