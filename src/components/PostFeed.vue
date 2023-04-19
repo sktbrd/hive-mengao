@@ -20,7 +20,7 @@
             </q-avatar>
             <q-item-label lines="1">{{ post.author }}</q-item-label>
             <q-item-label lines="5" header>{{ post.title }}</q-item-label>
-            <q-btn flat icon="done" @click.stop="likePost(post, hiveuser)" class="q-ml-sm   " label="Vote"/>
+            <q-btn flat icon="done" @click.stop="likePost()" class="q-ml-sm" label="Vote"/>
           </q-card-section>
         </q-card>
         <div v-if="showPost" class="post-feed"></div>
@@ -34,7 +34,6 @@ import PostModal from 'src/components/PostModal.vue'
 import getDhive from 'boot/dhive'
 import isLoggedIn from 'src/pages/LoginPage.vue'
 import hiveuser from 'src/layouts/MainLayout.vue'
-import { useQuasar } from 'quasar'
 
 export default {
   name: 'PostFeed',
@@ -42,7 +41,11 @@ export default {
     PostModal
   },
   props: {
-    hiveuser: Object
+    hiveuser: Object,
+    tag: {
+      type: String,
+      default: 'skatehive'
+    }
   },
   data () {
     // Data properties to store the posts, search query, user, selected post, and post modal state
@@ -73,7 +76,7 @@ export default {
         'https://api.openhive.network'
       ])
       const query = {
-        tag: 'skatehive',
+        tag: this.tag,
         limit: 69
       }
       const posts = await dhiveClient.database.getDiscussions('created', query)
@@ -98,59 +101,8 @@ export default {
       console.log(post.url)
       console.log(post)
     },
-    likePost (post) {
-      // Get dhive object and user from useAuthUser
-      const { dhive } = getDhive()
-      console.log(hiveuser.name)
-      const $q = useQuasar()
-
-      if (!hiveuser) {
-        alert('Please log in first')
-        return
-      }
-
-      const voter = $q.sessionStorage.getItem('user').name// The username of the account making the vote (the voter)
-      console.log(voter)
-      // Request the posting private key using Hive Keychain
-      if (!window.hive_keychain) {
-        alert('Please install Hive Keychain first')
-        return
-      }
-
-      window.hive_keychain.requestSignBuffer(voter, '', 'Posting', async (response) => {
-        if (response.error) {
-          console.error('Error:', response.message)
-          return
-        }
-
-        try {
-          // Create the private key object
-          const privateKey = dhive.PrivateKey.fromString(response.result)
-
-          // Post information
-          const author = post.author // The author of the post that the voter is voting on
-          const permlink = post.permlink // The unique identifier of the post
-
-          // Vote weight
-          const weight = 10000 // 100% upvote, adjust as needed
-
-          // Create the vote object
-          const vote = {
-            voter,
-            author,
-            permlink,
-            weight
-          }
-
-          // Broadcast the vote
-          const result = await dhive.broadcast.vote(vote, privateKey)
-          console.log('Vote success:', result)
-          console.log('Liked post:', post)
-          console.log(post.author)
-        } catch (error) {
-          console.error('Error:', error)
-        }
-      })
+    likePost () {
+      console.log('vote')
     },
     catch (error) {
       console.error('Vote error:', error)

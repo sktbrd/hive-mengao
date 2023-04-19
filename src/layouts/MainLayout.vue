@@ -73,8 +73,9 @@ export default defineComponent({
         const modifiedLink = { ...linksList[1] }
         modifiedLink.title = hiveuser.name
         console.log(hiveuser.name)
-        modifiedLink.caption = 'disconnect'
-        modifiedLink.icon = 'key'
+        modifiedLink.caption = 'Channel'
+        modifiedLink.icon = 'person'
+        modifiedLink.link = '/profile/' + hiveuser.name
         return [
           ...linksList.slice(0, 1),
           modifiedLink,

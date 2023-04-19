@@ -22,6 +22,7 @@ export default defineComponent({
   setup () {
     const $q = useQuasar()
     const user = $q.sessionStorage.getItem('user')
+    console.log(user)
     const connectedWallet = localStorage.getItem('connectedWallet')
     const ethbalance = localStorage.getItem('ethbalance')
     console.log(user.hbd_balance)

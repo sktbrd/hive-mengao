@@ -16,8 +16,8 @@ export default defineComponent({
       let frameIndex = 0
 
       function animateFrames () {
-        console.clear()
-        console.log(frames[frameIndex])
+        // console.clear()
+        // console.log(frames[frameIndex])
         frameIndex = (frameIndex + 1) % frames.length
         setTimeout(animateFrames, 250)
       }

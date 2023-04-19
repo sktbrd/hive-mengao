@@ -15,40 +15,41 @@
         <q-tab name="nfts" label="NFTs" icon="layers" />
         <q-tab name="videos" label="Videos" icon="ondemand_video" />
         <q-tab name="wallet" label="Wallet" icon="account_balance_wallet" />
+        <q-tab name="logout" label="logout" icon="logout" @click="logout" />
       </q-tabs>
     </div>
-    <div class="q-gutter-md q-matrix">
-      <div v-for="(post, index) in posts" :key="index" class="q-col-xs-12 q-col-md-4 q-mb-md">
-        <q-card @click="showPost(post)" class="cursor-pointer">
-          <div style="height: 150px; overflow: hidden;">
-            <img :src="post.thumbnail" style="width: 100%; height: 100%; object-fit: cover;" />
-          </div>
-          <q-card-section>
-            <q-item-label lines="5" header>{{ post.title }}</q-item-label>
-            <q-btn flat icon="done" @click.stop="likePost(post)" class="q-ml-sm right" label="Vote" />
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
+    <h1> {{ hiveuserName }}</h1>
+    <PostFeed :tag="'coletivoxv'"></PostFeed>
     <div>
       <q-btn flat icon="back" class="settings-btn" @click="$router.push('/settings')">Settings</q-btn>
     </div>
   </q-page>
 </template>
-
 <script>
 import PostModal from 'src/components/PostModal.vue'
-import getDhive from 'boot/dhive'
+import PostFeed from 'src/components/PostFeed.vue'
+import { useQuasar } from 'quasar'
 
 export default {
   name: 'Profile-page',
   components: {
-    PostModal
+    PostModal,
+    PostFeed
   },
   props: {
     username: {
       type: String,
       required: true
+    }
+  },
+  setup () {
+    const $q = useQuasar()
+    const hiveuser = $q.sessionStorage.getItem('user')
+    const hiveuserName = hiveuser.name
+    console.log(hiveuserName)
+    return {
+      hiveuser,
+      hiveuserName
     }
   },
   data () {
@@ -58,37 +59,26 @@ export default {
       showPostModal: false
     }
   },
-  async mounted () {
-    const { dhive } = getDhive()
-    const dhiveClient = new dhive.Client([
-      'https://api.hive.blog',
-      'https://api.hivekings.com',
-      'https://anyx.io',
-      'https://api.openhive.network'
-    ])
-    const query = {
-      tag: 'web-gnar',
-      limit: 20
-    }
-    const posts = await dhiveClient.database.getDiscussions('blog', query)
-    this.posts = posts.map((post) => {
-      const json = JSON.parse(post.json_metadata)
-      const thumbnail = json.image && json.image.length > 0 ? json.image[0] : ''
-      return {
-        ...post,
-        thumbnail
-      }
-    })
-  },
   methods: {
     showPost (post) {
       this.selectedPost = post
       this.showPostModal = true
     },
     getAuthorAvatar () {
+    },
+    logout () {
+    // do the necessary actions to log out the user, for example:
+    // clear the session storage, remove authentication tokens, etc.
+    // then navigate to the login page
+      this.$router.push('/login')
+      sessionStorage.set('user', null)
+      console.log('logout')
     }
   },
   computed: {
+    tag () {
+      return this.hiveuserName
+    }
   }
 }
 </script>
