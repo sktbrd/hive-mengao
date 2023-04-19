@@ -24,13 +24,13 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import useAuthUser from 'src/composables/UseAuthUser'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'LoginPage',
 
   setup () {
-    // const router = useRouter()
+    const router = useRouter()
 
     // import useAuthUser composable
     const { login } = useAuthUser()
@@ -45,16 +45,16 @@ export default defineComponent({
       try {
         // call login function with form data
         const loggedIn = await login(form.value)
-        // if user is logged in, log form data
+        // if user is logged in, log form data and navigate to homepage
         if (loggedIn === true) {
           console.log(form.value.username)
+          router.push('/')
         }
       } catch (error) {
         // alert user if there's an error
         alert(error.message)
       }
     }
-
     // return variables for use in template
     return {
       form,

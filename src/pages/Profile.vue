@@ -6,7 +6,7 @@
     <div class="banner-wrapper">
       <img class="banner" src="https://via.placeholder.com/1200x200" alt="Banner Placeholder" />
         <q-avatar class="avatar-overlay">
-          <img :src="getAuthorAvatar(post)" class="avatar-img" />
+          <img :src="getAuthorAvatar()" class="avatar-img" />
         </q-avatar>
         <q-item-label lines="1">{{ post && post.author }}</q-item-label>
       <q-tabs v-model="selectedTab" align="center" class="profile-nav">
@@ -82,3 +82,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.q-avatar {
+  width: 120px;
+  height: 120px;
+  position: center;
+  padding-left: 20px;
+}
+</style>

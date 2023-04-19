@@ -10,7 +10,7 @@ const routes = [
       { path: 'login', component: () => import('pages/LoginPage.vue') },
       { path: 'wallet', component: () => import('pages/UserWallet.vue') },
       { path: 'post', component: () => import('pages/PostPage.vue') },
-      { path: 'eth', component: () => import('src/pages/Profile.vue') },
+      { path: 'eth', component: () => import('src/pages/LoginETH.vue') },
       { path: 'profile/:username', component: () => import('pages/Profile.vue') },
       { path: 'quest', component: () => import('pages/QuestStoken.vue') }
     ]
