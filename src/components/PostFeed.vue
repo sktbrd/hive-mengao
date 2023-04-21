@@ -20,7 +20,8 @@
             </q-avatar>
             <q-item-label lines="1">{{ post.author }}</q-item-label>
             <q-item-label lines="5" header>{{ post.title }}</q-item-label>
-            <q-btn flat icon="done" @click.stop="likePost()" class="q-ml-sm" label="Vote"/>
+            <q-btn flat icon="done" @click.stop="vote(post.author, post.permlink)" class="q-ml-sm" label="Vote"/>
+            <q-btn flat icon="wallet" class="q-ml-sm" label="69.420 Hive" />
           </q-card-section>
         </q-card>
         <div v-if="showPost" class="post-feed"></div>
@@ -33,7 +34,7 @@
 import PostModal from 'src/components/PostModal.vue'
 import getDhive from 'boot/dhive'
 import isLoggedIn from 'src/pages/LoginPage.vue'
-import hiveuser from 'src/layouts/MainLayout.vue'
+import { useQuasar } from 'quasar'
 
 export default {
   name: 'PostFeed',
@@ -41,7 +42,6 @@ export default {
     PostModal
   },
   props: {
-    hiveuser: Object,
     tag: {
       type: String,
       default: 'skatehive'
@@ -52,7 +52,8 @@ export default {
     return {
       posts: [],
       selectedPost: null,
-      showPostModal: false
+      showPostModal: false,
+      postingKey: '' // initialize the postingKey data property
     }
   },
   mounted () {
@@ -96,16 +97,39 @@ export default {
     showPost (post) {
       this.selectedPost = post
       this.showPostModal = true
-      console.log(hiveuser.name)
+      console.log(post.permlink)
       console.log(post.author)
       console.log(post.url)
-      console.log(post)
+      console.log(sessionStorage.getItem('user').name)
     },
-    likePost () {
-      console.log('vote')
-    },
-    catch (error) {
-      console.error('Vote error:', error)
+    async vote (author, permlink) {
+      const { dhive } = getDhive()
+      const postingKey = this.postingKey
+      const $q = useQuasar()
+      const hiveuser = $q.sessionStorage.getItem('user')
+      const voter = hiveuser.name
+      const weight = 10000 // Set the vote weight to 100% upvote
+      console.log(this.hiveuserName)
+      console.log(author)
+      console.log(permlink)
+      const vote = {
+        voter,
+        author,
+        permlink,
+        weight
+      }
+      try {
+        const dhiveClient = new dhive.Client([
+          'https://api.hive.blog',
+          'https://api.hivekings.com',
+          'https://anyx.io',
+          'https://api.openhive.network'
+        ])
+        const result = await dhiveClient.broadcast.vote(vote, dhive.PrivateKey.fromString(postingKey))
+        console.log('Vote successful:', result)
+      } catch (error) {
+        console.error('Vote error:', error)
+      }
     }
   }
 }
